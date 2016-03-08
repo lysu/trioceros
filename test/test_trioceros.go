@@ -1,18 +1,16 @@
-package trioceros_test
+package main
 
 import (
-	"testing"
-	"github.com/spf13/viper"
-	_ "github.com/spf13/viper/remote"
 	"fmt"
+	_ "github.com/lysu/trioceros"
+	"github.com/spf13/viper"
 	"time"
 )
 
-func TestViperEtcd(t *testing.T) {
+func main() {
 
 	viper.AddRemoteProvider("etcd", "http://127.0.0.1:4001", "/config/test.toml")
 	viper.SetConfigType("toml")
-
 
 	err := viper.ReadRemoteConfig()
 	if err != nil {
@@ -27,7 +25,7 @@ func TestViperEtcd(t *testing.T) {
 	}()
 
 	for {
-		time.Sleep(2*time.Second)
+		time.Sleep(2 * time.Second)
 		fmt.Println("value: ", viper.GetInt("a"))
 	}
 
