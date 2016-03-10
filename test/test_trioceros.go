@@ -18,9 +18,12 @@ func main() {
 	}
 
 	go func() {
-		err = viper.WatchRemoteConfig()
-		if err != nil {
-			panic(err)
+		for {
+			err = viper.WatchRemoteConfig()
+			if err != nil {
+				fmt.Println("although all config storage has down, continue to retry watch.")
+				time.Sleep(4 * time.Second)
+			}
 		}
 	}()
 
